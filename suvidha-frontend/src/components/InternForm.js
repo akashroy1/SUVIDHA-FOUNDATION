@@ -24,8 +24,9 @@ const InternForm = () => {
   };
 
   return (
-    <div>
-        <form onSubmit={handleSubmit}>
+    <div style={{ display: "flex", alignItems: 'center', justifyContent: 'center'}}>
+        <form onSubmit={handleSubmit} style={{width: "40%"}}>
+          <label>Date of Joining</label>
           <input
             type="date"
             name="doj"
@@ -33,13 +34,15 @@ const InternForm = () => {
             onChange={handleInputChange}
             placeholder="Date of Joining"
           />
+          <label> Duration of Internship</label>
           <input
             type="text"
             name="duration"
             value={formData.duration}
             onChange={handleInputChange}
             placeholder="Duration (in month)"
-          />
+          />\
+          <br />
           <button type="submit">Submit</button>
         </form>
     </div>
