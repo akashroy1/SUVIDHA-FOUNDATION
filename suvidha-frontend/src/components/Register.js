@@ -1,4 +1,6 @@
 import React, { useRef } from 'react';
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios';
 import '../css/register.css';
 
 function Register() {
@@ -9,10 +11,52 @@ function Register() {
     const dob = useRef();
     const password = useRef();
     const confirmPassword = useRef();
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (e)=>{
+        e.preventDefault();
+        axios
+        .post(
+            `http://localhost:5000/api/new-intern`,
+            {
+                iid: iid.current.value,    
+                email: email.current.value,
+                name: name.current.value,
+                phone: phone.current.value,
+                dob: dob.current.value,
+                password: password.current.value,
+            }
+        )
+        .then((response) => {
+            if (response.data.status === "Success") {
+            // console.log(response.data.insertedIntern);
+            localStorage.setItem('user', JSON.stringify(response.data.insertedIntern));
+            navigate('/');
+            }
+        })
+        .catch((error) => {
+            console.error('Login Error: ' + error);
+            console.log(error);
+        });
+    }
+
+    const loginClick = ()=>{
+        navigate('/login');
+        return null;
+    }
     
     return (
         <div className="login-form-container">
-        <h2>Login</h2>
+        <div className="navbar">
+            <button
+
+                onClick={loginClick}
+            >
+                Login
+            </button>
+        </div>
+        <h2>Register</h2>
         <form onSubmit={handleSubmit}>
             <div className="form-group">
             <label>Company ID:</label>
@@ -45,7 +89,7 @@ function Register() {
             />
             </div>
             <div className="form-group">
-            <label>Name:</label>
+            <label>Phone:</label>
             <input
                 type="text"
                 id="phone"
@@ -85,7 +129,7 @@ function Register() {
             />
             </div>
             <button type="submit" >
-            Login
+                Register
             </button>
         </form>
         </div>

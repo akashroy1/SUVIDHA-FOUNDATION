@@ -9,6 +9,7 @@ import Login from './components/Login';
 import InternForm from "./components/InternForm";
 import OfferLetter from './components/OfferLetter';
 import { AuthContext } from './contexts/AuthContext';
+import Register from './components/Register';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route element={<OfferLetter/>} path='/offerLetter' exact/>
           </Route>
           <Route path='/login' element={<Login/>} />
+          <Route path='/register' element={<Register/>} />
           {/* <PrivateRoutes path='/' Component={Profile} />
           <PrivateRoutes path='/intern' Component={InternForm} />
           <PrivateRoutes path='/offerletter' Component={OfferLetter}/> */}

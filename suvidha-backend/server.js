@@ -35,7 +35,7 @@ app.get('/', (req, res)=>{
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
-  console.log(email, password);
+  // console.log(email, password);
 
   if (!email || !password)
     res.status(400).json({ message: 'Email and Password required' });
@@ -68,15 +68,22 @@ app.post('/api/login', async (req, res) => {
 
 // API endpoint to handle form submissions
 app.post('/api/new-intern', async (req, res) => {
-  const { iid, email,  name, phone, dob } = req.body;
+  const { iid, email, name, phone, dob, password } = req.body;
+  // console.log(req.body);
 
   try {
     const client = await pool.connect();
-    const result = await client.query('INSERT INTO interns (iid, email, name, phone, dob) VALUES ($1, $2, $3, $4, $5) RETURNING *', [iid, email, name, phone, dob]);
+    const result = await client.query('INSERT INTO interns (iid, email, name, phone, dob, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [iid, email, name, phone, dob, password]);
     const insertedIntern = result.rows[0];
     
-    res.status(201).json(insertedIntern);
-    
+    const token = jwt.sign({ email }, 'secret_key', { expiresIn: '1h' });
+    res.json(
+      { 
+        status: 'Success',
+        token,
+        insertedIntern
+      }
+    );
     client.release();
   } catch (error) {
     console.error('Error executing query:', error);

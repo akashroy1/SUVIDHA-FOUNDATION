@@ -1,3 +1,9 @@
+.navbar{
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
 .login-form-container {
     max-width: 400px;
     margin: 0 auto;

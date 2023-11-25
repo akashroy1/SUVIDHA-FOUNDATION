@@ -35,8 +35,21 @@ const Login = () => {
       });
   };
 
+  const registerClick = ()=>{
+    navigate('/register');
+    return null;
+  }
+
   return (
     <div className="login-form-container">
+      <div className="navbar">
+        <button
+
+            onClick={registerClick}
+        >
+            Register
+        </button>
+      </div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
